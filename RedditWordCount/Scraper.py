@@ -73,7 +73,7 @@ class Scraper:
                     instances = self.countInstances(comment.body, stats.index[i])
                     stats[i] += instances
                     total += instances
-                    print(stats[i])
+                    #print(stats[i])
 
 
         print(stats)
