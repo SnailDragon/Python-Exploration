@@ -1,21 +1,31 @@
 from Scraper import Scraper
 
-s = Scraper("memes", 10, "hot")
-print(s.countInstances("asdf asdf adsf", "asdf"))
-
-
-while False:
+while True:
     print("\nComment analysis:")
-    keywords = input("Enter words to look for (\"quit\" to exit): ")
-    
-    if keywords == "quit":
+
+    option = input("Use wordlist file? (y/n/quit): ")
+
+    if option == "quit": 
         break
+    elif option == "n":
+        keywords = input("Enter words to look for (\"quit\" to exit): ")
 
-    scraper = Scraper("memes", 10, "hot")
+        if keywords == "quit":
+            break
+    elif option == "y":
+        path = input("Enter file path: ")
+        f = open(path, "r")
+        keywords = f.read()
+    else:
+        continue
+        
 
-    print("Looking for: \n" + str(scraper.getKeywords(keywords)))
+
+    scraper = Scraper("memes", 100, "top")
+
+    print("Looking for: " + str(scraper.getKeywords(keywords)) + " in r/" + scraper.subreddit)
     
-    #scraper.commentWordCount(keywords)
+    scraper.commentWordCount(keywords)
 
 
 

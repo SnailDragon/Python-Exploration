@@ -1,10 +1,12 @@
 import praw
 import pandas as pd
 import numpy as np
+from praw.models import MoreComments
 
 class Scraper:
 
     def __init__(self, subreddit, depth, feed):
+        self.subreddit = subreddit
         self.reddit = praw.Reddit(client_id='a6uX27rHUe4D5y9cpLZ2WQ', client_secret='_ylxW5EjPRbVE44pXgWLISQflxXU-A', user_agent='CommentSearcher')
         if feed == "hot":
             self.posts = self.reddit.subreddit(subreddit).hot(limit=depth)
@@ -12,8 +14,6 @@ class Scraper:
             self.posts = self.reddit.subreddit(subreddit).top(limit=depth)
         elif feed == "new":
             self.posts = self.reddit.subreddit(subreddit).new(limit=depth)
-
-
 
     # gets words to search for from input string 
     # - seperated by spaces except when in quotation marks
@@ -54,23 +54,31 @@ class Scraper:
         index = 0
         count = 0
         while baseStr.find(strToFind, index) >= 0:
-            index = baseStr.find(strToFind, index+1)
+            #print(index)
             count += 1
+            index = baseStr.find(strToFind, index+len(strToFind))
         return count
 
 
     def commentWordCount(self, keywordBank):
         keywords = self.getKeywords(keywordBank)
-        stats = pd.Series(np.zeros(len(keywords)), index=keywords, dtype=int)
-
+        stats = pd.Series(np.zeros(len(keywords)), index=keywords, dtype=int, name="Word Counts")
+        total = 0
         for post in self.posts:
-            print(len(post.comments))
-            for comment in post.comments:
-                for i in stats:
-                    stats[i] = self.countInstances(comment, i)
+            post.comments.replace_more(limit=None)
+            for comment in post.comments.list():
+                if isinstance(comment, MoreComments):
+                    continue
+                for i in range(len(stats)):
+                    instances = self.countInstances(comment.body, stats.index[i])
+                    stats[i] += instances
+                    total += instances
+                    print(stats[i])
 
 
         print(stats)
+        print(total)
+        return stats
 
 
 
