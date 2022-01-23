@@ -64,7 +64,10 @@ class Scraper:
         keywords = self.getKeywords(keywordBank)
         stats = pd.Series(np.zeros(len(keywords)), index=keywords, dtype=int, name="Word Counts")
         total = 0
+        it = 0
         for post in self.posts:
+            print(it)
+            it += 1
             post.comments.replace_more(limit=None)
             for comment in post.comments.list():
                 if isinstance(comment, MoreComments):
