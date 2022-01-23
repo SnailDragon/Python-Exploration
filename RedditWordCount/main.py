@@ -16,6 +16,7 @@ while True:
         path = input("Enter file path: ")
         f = open(path, "r")
         keywords = f.read()
+        f.close()
     else:
         continue
         
@@ -25,7 +26,13 @@ while True:
 
     print("Looking for: " + str(scraper.getKeywords(keywords)) + " in r/" + scraper.subreddit)
     
-    scraper.commentWordCount(keywords)
+    output = scraper.commentWordCount(keywords)
+
+    fwrite = open("./output.txt", "a")
+    fwrite.write(output)
+    fwrite.close()
+
+
 
 
 
