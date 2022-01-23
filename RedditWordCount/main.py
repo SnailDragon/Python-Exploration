@@ -2,7 +2,7 @@ from Scraper import Scraper
 
 while True:
     print("\nComment analysis:")
-
+    option = ""
     option = input("Use wordlist file? (y/n/quit): ")
 
     if option == "quit": 
