@@ -19,7 +19,6 @@ while True:
         f.close()
     else:
         continue
-        
 
 
     scraper = Scraper("memes", 100, "top")
