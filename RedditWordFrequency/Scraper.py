@@ -2,7 +2,6 @@ import praw
 import pandas as pd
 import numpy as np
 from praw.models import MoreComments
-import csv
 import string
 
 class Scraper:
@@ -18,7 +17,7 @@ class Scraper:
         elif feed == "new":
             self.posts = self.reddit.subreddit(subreddit).new(limit=depth)
 
-        self.frequencies = pd.Series()
+        self.frequencies = pd.Series(dtype=int)
 
     # gets words to search for from input string 
     # - seperated by spaces except when in quotation marks
@@ -74,6 +73,8 @@ class Scraper:
         for post in self.posts:
             print(it)
             it += 1
+            if(it % 10 == 0):
+                self.frequencies.to_csv("WordFrequencies.csv")
             post.comments.replace_more(limit=None)
             print("expanded")
             for comment in post.comments.list():
