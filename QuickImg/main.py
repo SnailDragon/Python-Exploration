@@ -1,4 +1,5 @@
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageChops
+
 #Read image
 im = Image.open( 'howlscastle.jpg' )
 #Display image
@@ -13,10 +14,10 @@ im_sharp.save( 'image_sharpened.jpg', 'JPEG' )
 #and Blue for RGB
 r,g,b = im_sharp.split()
 
-r.save('image_r.jpg', 'JPEG')
-g.save('image_g.jpg', 'JPEG')
-b.save('image_b.jpg', 'JPEG')
+newr = ImageChops.multiply(r, Image.new('RGB', r.size, (255,0,0)))
 
+newr.save('newr.jpg', 'JPEG')
 #Viewing EXIF data embedded in image
 exif_data = im._getexif()
 exif_data
+
