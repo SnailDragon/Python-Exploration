@@ -1,23 +1,67 @@
 from PIL import Image, ImageFilter, ImageChops
+from Manip import *
+import sys
 
-#Read image
-im = Image.open( 'howlscastle.jpg' )
-#Display image
-#im.show()
+print('Welcome to the quick image editor. Enter "help" for command options. ')
+manip = Manip()
 
-#Applying a filter to the image
-im_sharp = im.filter( ImageFilter.SHARPEN )
-#Saving the filtered image to a new file
-im_sharp.save( 'image_sharpened.jpg', 'JPEG' )
+if(len(sys.argv) == 2):
+    try:
+        im = Image.open(sys.argv[1])
+        manip.path = sys.argv[1]
+    except FileNotFoundError:
+        print("Invalid initial path")
 
-#Splitting the image into its respective bands, i.e. Red, Green,
-#and Blue for RGB
-r,g,b = im_sharp.split()
+while(True):
+    inp = input("> ").lower()
+    #print(inp)
 
-newr = ImageChops.multiply(r, Image.new('RGB', r.size, (255,0,0)))
+    if(inp == "help"):
+        manip.help()
 
-newr.save('newr.jpg', 'JPEG')
-#Viewing EXIF data embedded in image
-exif_data = im._getexif()
-exif_data
+    elif(inp == "quit" or inp == "exit"):
+        break
 
+    elif(inp == "show"):
+        if(manip.validPath()):
+            manip.showImage()
+
+    elif(inp == "resize"):
+        if(manip.validPath()):
+            print("Skip to set value automatically, requires at least width or height. ")
+            try:
+                widthIn = input("Enter new width: ")
+                if(widthIn != "" and int(widthIn) <= 0):
+                    raise ValueError
+                width = -1 if widthIn=="" else int(widthIn)
+                heightIn = input("Enter a new height: ")
+                if(heightIn != "" and int(heightIn) <= 0):
+                    raise ValueError
+                height = -1 if heightIn=="" else int(heightIn)
+            except ValueError:
+                print("Please enter a positive integer.")
+                continue
+
+            if(height == -1 and width == -1):
+                print("Please specify at least one dimension. ")
+                continue
+
+            #scheme = input("Enter scheme: ")
+            manip.resize(width, height)
+    
+    elif(inp == "path"):
+        path = input("Enter Path: ")
+        if(path == ""):
+            if(manip.path == ""):
+                print("Path has not been added")
+            else:
+                print("Current path: " + manip.path)
+        else:
+            try:
+                im = Image.open(path)
+                manip.path = path
+            except FileNotFoundError:
+                print("Invalid path")
+    else:
+        print('Not a valid command. Use "help" for list of commands')
+    
