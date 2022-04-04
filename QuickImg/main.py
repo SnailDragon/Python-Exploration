@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter, ImageChops
+from PIL import Image, ImageColor
 from Manip import *
 import sys
 
@@ -21,6 +21,18 @@ while(True):
 
     elif(inp == "quit" or inp == "exit"):
         break
+
+    elif(inp == "split"):
+        if(manip.validPath()):
+            manip.splitRGB()
+    
+    elif(inp == "splitbw"):
+        if(manip.validPath()):
+            manip.splitBW()
+
+    elif(inp == "grayscale"):
+        if(manip.validPath()):
+            manip.grayscale()
 
     elif(inp == "show"):
         if(manip.validPath()):
