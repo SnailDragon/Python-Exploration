@@ -25,6 +25,10 @@ while(True):
     elif(inp == "show"):
         if(manip.validPath()):
             manip.showImage()
+    
+    elif(inp == "showlast"):
+        if(manip.resultPath != ""):
+            manip.showLastResult()
 
     elif(inp == "resize"):
         if(manip.validPath()):

@@ -4,9 +4,14 @@ class Manip:
 
     def __init__(self):
         self.path = ""
+        self.resultPath = ""
 
     def showImage(self):
         with Image.open(self.path) as im:
+            im.show()
+
+    def showLastResult(self):
+        with Image.open(self.resultPath) as im:
             im.show()
 
     def resize(self, width, height):
@@ -27,7 +32,9 @@ class Manip:
                 name = self.path[self.path.rindex("/")+1:self.path.rindex(".")]
             else:
                 name = self.path[:self.path.rindex(".")]
-            resizedIm.save(f"{name}{w}x{h}{ext}")
+            self.resultPath = f"{name}{w}x{h}{ext}"
+            resizedIm.save(self.resultPath)
+
 
     def validPath(self):
         if(self.path == ""):
