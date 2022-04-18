@@ -9,3 +9,4 @@ scraper = Scraper(subreddit, depth, feed)
 
 scraper.commentWordAnalysis()
 
+ 

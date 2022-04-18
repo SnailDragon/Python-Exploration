@@ -20,8 +20,11 @@ while True:
     else:
         continue
 
-
-    scraper = Scraper("memes", 100, "top")
+    subreddit = input("Enter subreddit: ")
+    count = int(input("Number of Posts: "))
+    feed = input("top/new/hot: ")
+ 
+    scraper = Scraper(subreddit, count, feed)
 
     print("Looking for: " + str(scraper.getKeywords(keywords)) + " in r/" + scraper.subreddit)
     

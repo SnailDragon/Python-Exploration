@@ -66,10 +66,11 @@ class Scraper:
         total = 0
         it = 0
         for post in self.posts:
-            print(it)
+            print("post: " + str(it))
             it += 1
-            post.comments.replace_more(limit=None)
+            post.comments.replace_more(limit=10)
             for comment in post.comments.list():
+                print("next comment")
                 if isinstance(comment, MoreComments):
                     continue
                 for i in range(len(stats)):

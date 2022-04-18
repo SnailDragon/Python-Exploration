@@ -64,26 +64,29 @@ class Scraper:
                 return
         newRow = pd.Series(data=[1], index=[word])
         #print(newRow)
-        self.frequencies = self.frequencies.append(newRow, ignore_index = False)
+        #self.frequencies = self.frequencies.append(newRow, ignore_index = False)
+        self.frequencies = pd.concat([self.frequencies, newRow])
         #print(self.frequencies)
 
     def commentWordAnalysis(self):
         total = 0
         it = 0
+        f = open("WordFrequencies.csv", "w")
+        f.close()
         for post in self.posts:
-            print(it)
+            print("post: " + str(it))
             it += 1
-            if(it % 10 == 0):
-                self.frequencies.to_csv("WordFrequencies.csv")
-            post.comments.replace_more(limit=None)
-            print("expanded")
+            # if(it % 10 == 0):
+            #     self.frequencies.to_csv("WordFrequencies.csv")
+            post.comments.replace_more(limit=10)
+            print("expanded - comments: " + str(len(post.comments.list())))
             for comment in post.comments.list():
+                print("next comment")
                 if isinstance(comment, MoreComments):
                     continue
                 words = self.getWords(comment.body)
                 for i in words:
                     self.addToSheet(i)
-        f = open("WordFrequencies.csv", "w")
-        f.close()
+                self.frequencies.to_csv("WordFrequencies.csv")
+        
         print(self.frequencies)
-        self.frequencies.to_csv("WordFrequencies.csv")
