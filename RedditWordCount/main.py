@@ -30,10 +30,10 @@ while True:
     
     output = scraper.commentWordCount(keywords)
 
-    fwrite = open("./output.txt", "a")
-    fwrite.write(output)
+    fwrite = open("./output.csv", "w")
     fwrite.close()
 
+    output.to_csv("output.csv")
 
 
 
