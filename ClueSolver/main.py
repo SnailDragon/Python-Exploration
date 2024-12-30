@@ -5,31 +5,31 @@ class Card:
         self.players = players
         empty = ["?" for i in range(len(players))]
         self.who = {
-            "Green": empty,
-            "Mustard": empty,
-            "Peacock": empty,
-            "Plum": empty,
-            "Scarlet": empty,
-            "Orchid": empty
+            "Green": empty.copy(),
+            "Mustard": empty.copy(),
+            "Peacock": empty.copy(),
+            "Plum": empty.copy(),
+            "Scarlet": empty.copy(),
+            "Orchid": empty.copy()
         }
         self.what = {
-            "Candlestick": empty,
-            "Dagger": empty,
-            "Revolver": empty,
-            "Lead Pipe": empty,
-            "Rope": empty,
-            "Wrench": empty
+            "Candlestick": empty.copy(),
+            "Dagger": empty.copy(),
+            "Revolver": empty.copy(),
+            "Lead Pipe": empty.copy(),
+            "Rope": empty.copy(),
+            "Wrench": empty.copy()
         }
         self.where = {
-            "Conservatory": empty,
-            "Ballroom": empty,
-            "Kitchen": empty,
-            "Dining Room": empty,
-            "Lounge": empty,
-            "Hall": empty,
-            "Study": empty,
-            "Library": empty,
-            "Billiard Room": empty
+            "Conservatory": empty.copy(),
+            "Ballroom": empty.copy(),
+            "Kitchen": empty.copy(),
+            "Dining Room": empty.copy(),
+            "Lounge": empty.copy(),
+            "Hall": empty.copy(),
+            "Study": empty.copy(),
+            "Library": empty.copy(),
+            "Billiard Room": empty.copy()
         }
     
     def getTurnPlayer(self):
@@ -120,3 +120,5 @@ if __name__ == "__main__":
             
         print(card)
         print("Best guess:", card.getBestGuess(), sep="\n")
+        
+    print()
